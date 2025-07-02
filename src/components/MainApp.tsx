@@ -3,9 +3,8 @@ import { motion } from 'framer-motion';
 
 interface Wish {
   Timestamp: string;
-  Nama: string;
-  Ucapan: string;
-  FotoURL?: string;
+  nama: string;
+  wish: string;
 }
 
 export default function MainApp() {
@@ -13,28 +12,127 @@ export default function MainApp() {
 
   useEffect(() => {
     const fetchWishes = async () => {
+      const apiUrl = 'https://script.google.com/macros/s/AKfycbx5hF5eJUNYhJ1ZIXe4V5J5-GfPmg-pckfbwDQdI_onHCRihuSfOnyaUq7vmK19xwIO2w/exec';
+      
       try {
-        const res = await fetch('https://script.google.com/macros/s/AKfycbw-zxUvQCudVOFeHrTaMw5rMi4tbtV7O24vn_G7iOI19kxVRyT1f8dqG4Z5bwjfa13aIQ/exec');
-        if (!res.ok) throw new Error('Fetch failed');
-        const data: Wish[] = await res.json();
-        // optional: sort by timestamp descending
+        console.log('🚀 Starting API call...');
+        console.log('🔗 API URL:', apiUrl);
+        console.log('⏰ Timestamp:', new Date().toISOString());
+        
+        // Test 1: Basic fetch without headers
+        console.log('📡 Attempting fetch...');
+        const res = await fetch(apiUrl, {
+          method: 'GET',
+          mode: 'cors', // Explicitly set CORS mode
+        });
+        
+        console.log('📡 Response received!');
+        console.log('📡 Status:', res.status);
+        console.log('📡 Status Text:', res.statusText);
+        console.log('📡 OK:', res.ok);
+        console.log('📡 Type:', res.type);
+        console.log('📡 URL:', res.url);
+        
+        // Log all headers
+        console.log('📡 Response Headers:');
+        for (const [key, value] of res.headers.entries()) {
+          console.log(`   ${key}: ${value}`);
+        }
+        
+        if (!res.ok) {
+          console.error(`❌ HTTP Error: ${res.status} ${res.statusText}`);
+          throw new Error(`HTTP error! status: ${res.status} - ${res.statusText}`);
+        }
+        
+        console.log('📄 Reading response as text...');
+        const textResponse = await res.text();
+        console.log('📄 Raw response length:', textResponse.length);
+        console.log('📄 Raw response (first 500 chars):', textResponse.substring(0, 500));
+        console.log('📄 Full raw response:', textResponse);
+        
+        if (!textResponse || textResponse.trim() === '') {
+          throw new Error('Empty response from API');
+        }
+        
+        console.log('🔄 Parsing JSON...');
+        const data: Wish[] = JSON.parse(textResponse);
+        console.log('✅ Parsed data type:', typeof data);
+        console.log('✅ Parsed data is array:', Array.isArray(data));
+        console.log('✅ Parsed data length:', data.length);
+        console.log('✅ Parsed data:', data);
+        
+        if (!Array.isArray(data)) {
+          throw new Error('Response is not an array');
+        }
+        
+        if (data.length === 0) {
+          console.log('⚠️ No wishes found in response');
+          throw new Error('No wishes found');
+        }
+        
+        // Validate data structure
+        console.log('🔍 Validating data structure...');
+        const firstItem = data[0];
+        console.log('🔍 First item:', firstItem);
+        console.log('🔍 Has Timestamp?', 'Timestamp' in firstItem);
+        console.log('🔍 Has nama?', 'nama' in firstItem);
+        console.log('🔍 Has wish?', 'wish' in firstItem);
+        
+        // Sort by timestamp descending
+        console.log('🔄 Sorting data...');
         data.sort((a, b) => 
           new Date(b.Timestamp).getTime() - new Date(a.Timestamp).getTime()
         );
+        
+        console.log('💾 Setting wishes state...');
         setWishes(data);
-      } catch (err) {
-        console.error(err);
-        // Set dummy data untuk development jika API gagal
+        console.log('🎉 SUCCESS! Wishes loaded successfully!');
+        console.log('🎉 Total wishes loaded:', data.length);
+        
+      } catch (err: any) {
+        console.error('❌ DETAILED ERROR INFO:');
+        console.error('❌ Error type:', typeof err);
+        console.error('❌ Error name:', err.name);
+        console.error('❌ Error message:', err.message);
+        console.error('❌ Error stack:', err.stack);
+        console.error('❌ Full error object:', err);
+        
+        // Check if it's a network error
+        if (err.name === 'TypeError' && err.message.includes('fetch')) {
+          console.error('🚫 NETWORK ERROR: Kemungkinan masalah CORS atau Google Apps Script belum di-deploy dengan benar');
+        }
+        
+        console.log('🔧 Fallback: Using dummy data for development...');
+        
+        // Enhanced dummy data for testing
         setWishes([
           {
             Timestamp: new Date().toISOString(),
-            Nama: "Example Friend",
-            Ucapan: "Happy 17th Birthday! Semoga selalu bahagia dan sukses! 🎉💜",
-            FotoURL: ""
+            nama: "Dummy Tester",
+            wish: "🚨 INI DUMMY DATA! Jika kamu lihat ini, berarti API call gagal. Cek console untuk error details."
+          },
+          {
+            Timestamp: new Date(Date.now() - 86400000).toISOString(),
+            nama: "Debug Mode",
+            wish: "API endpoint: " + apiUrl.substring(0, 50) + "..."
+          },
+          {
+            Timestamp: new Date(Date.now() - 172800000).toISOString(),
+            nama: "Error Handler",
+            wish: "Error: " + (err.message || 'Unknown error')
           }
         ]);
       }
     };
+
+    // async function fetchWishes() {
+    //   const resp = await fetch("https://script.google.com/macros/s/AKfycbx.../exec");
+    //   const text = await resp.text();
+    //   const match = text.match(/window\.DATA = (\[.*\]);/);
+    //   const data = match ? JSON.parse(match[1]) : [];
+    //   console.log("✅ Got", data);
+    //   return data;
+    // }
 
     fetchWishes();
   }, []);
@@ -902,11 +1000,11 @@ export default function MainApp() {
                   <div className="flex items-center mb-4">
                     <div className="w-10 h-10 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full flex items-center justify-center mr-3">
                       <span className="text-white font-bold">
-                        {wish.Nama.charAt(0).toUpperCase()}
+                        {wish.nama.charAt(0).toUpperCase()}
                       </span>
                     </div>
                     <div>
-                      <p className="font-bold text-purple-800 text-lg">🎈 {wish.Nama}</p>
+                      <p className="font-bold text-purple-800 text-lg">🎈 {wish.nama}</p>
                       <p className="text-xs text-purple-600 opacity-70">
                         {new Date(wish.Timestamp).toLocaleDateString('id-ID')}
                       </p>
@@ -915,22 +1013,9 @@ export default function MainApp() {
                   
                   <div className="bg-white/50 rounded-lg p-4 mb-4">
                     <p className="text-purple-700 italic leading-relaxed">
-                      "{wish.Ucapan}"
+                      "{wish.wish}"
                     </p>
                   </div>
-                  
-                  {wish.FotoURL && (
-                    <motion.div
-                      whileHover={{ scale: 1.02 }}
-                      className="overflow-hidden rounded-lg"
-                    >
-                      <img
-                        src={wish.FotoURL}
-                        alt={`Foto dari ${wish.Nama}`}
-                        className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
-                      />
-                    </motion.div>
-                  )}
                   
                   {/* Floating hearts effect on hover */}
                   <motion.div
