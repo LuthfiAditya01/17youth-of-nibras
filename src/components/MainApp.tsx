@@ -9,6 +9,55 @@ interface Wish {
 
 export default function MainApp() {
   const [wishes, setWishes] = useState<Wish[]>([]);
+  const file_list_raw = [
+    "IMG-20230812-WA0010.jpg",
+    "IMG-20250702-WA0135.jpg",
+    "IMG-20250702-WA0149.jpg",
+    "img/img-no-3.jpg",
+    "IMG-20250702-WA0136.jpg",
+    "465246926_10227474272023566_4003190769634406474_n.jpg",
+    "IMG-20250331-WA0074.jpg",
+    "IMG-20250702-WA0137.jpg",
+    "IMG-20250702-WA0151.jpg",
+    "IMG-20250606-WA0008.jpg",
+    "IMG-20250702-WA0138.jpg",
+    "IMG-20250702-WA0152.jpg",
+    "IMG-20250702-WA0126.jpg",
+    "IMG-20250702-WA0139.jpg",
+    "IMG-20250702-WA0153.jpg",
+    "IMG-20250702-WA0127.jpg",
+    "IMG-20250702-WA0141.jpg",
+    "IMG-20250702-WA0154.jpg",
+    "IMG-20250702-WA0128.jpg",
+    "IMG-20250702-WA0142.jpg",
+    "IMG-20250702-WA0155.jpg",
+    "IMG-20250702-WA0129.jpg",
+    "IMG-20250702-WA0143.jpg",
+    "IMG-20250702-WA0156.jpg",
+    "IMG-20250702-WA0130.jpg",
+    "IMG-20250702-WA0144.jpg",
+    "IMG-20250702-WA0157.jpg",
+    "IMG-20250702-WA0131.jpg",
+    "IMG-20250702-WA0145.jpg",
+    "WhatsApp Image 2025-07-02 at 22.33.07_9706cffc.jpg",
+    "IMG-20250702-WA0132.jpg",
+    "IMG-20250702-WA0146.jpg",
+    "e2b35347c4767b2b6e775074d81b603a.jpg",
+    "IMG-20250702-WA0133.jpg",
+    "IMG-20250702-WA0147.jpg",
+    "IMG-20250702-WA0134.jpg",
+    "IMG-20250702-WA0148.jpg"
+]  
+  // Remove duplicates and create unique file list
+  const file_list = [...new Set(file_list_raw)];
+  
+  // Debug: Log duplicates
+  const duplicates = file_list_raw.filter((item, index) => file_list_raw.indexOf(item) !== index);
+  if (duplicates.length > 0) {
+    console.log("🚨 Duplicate files found:", duplicates);
+  }
+  console.log("📁 Total files after removing duplicates:", file_list.length);
+  console.log("📁 File list:", file_list);
 
   useEffect(() => {
     // const fetchWishes = async () => {
@@ -141,16 +190,16 @@ export default function MainApp() {
       try {
         const res = await fetch(PROXY + encodeURIComponent(GAS_URL));
         const data = await res.json();
-        const normalized = data.map(item => {
-          const o = {};
-          Object.keys(item).forEach(k => {
+        const normalized = data.map((item: any) => {
+          const o: any = {};
+          Object.keys(item).forEach((k: string) => {
             o[k.trim().toLowerCase()] = item[k];
           });
           return o;
         });
+        console.log("✅ Raw wishes:", data);
+        console.log("✅ Normalized wishes:", normalized);
         setWishes(normalized);
-        console.log("✅ Wishes:", data);
-        setWishes(data);
       } catch (err) {
         console.error("❌ Fetch error:", err);
         // fallback dummy
@@ -529,7 +578,10 @@ export default function MainApp() {
                   {/* Placeholder for photo - replace with actual image */}
                   <div className="aspect-[4/3] bg-gradient-to-br from-pink-200 via-purple-200 to-indigo-200 flex items-center justify-center">
                     <div className="text-center">
-                      <img src="foto-1.jpg" alt="" />
+                      <img
+                        src="foto-1.jpg"
+                        alt=""
+                      />
                     </div>
                   </div>
 
@@ -558,18 +610,18 @@ export default function MainApp() {
                     <span className="text-4xl">💕</span>
                   </motion.div>
 
-                  <h3 className="text-2xl font-bold text-purple-800 mb-4">Masa Kecil yang Lucu</h3>
+                  <h3 className="text-2xl font-bold text-purple-800 mb-4">Lu tau gak sih...</h3>
 
                   <div className="space-y-4 text-purple-700">
-                    <p className="italic leading-relaxed">"Inget nggak waktu kamu masih kecil, selalu ngikutin kemana kakak pergi? Lucu banget deh, kaya anak ayam yang ngikutin induknya! 😄"</p>
-                    <p className="leading-relaxed">Sekarang kamu udah 17 tahun, udah jadi anak yang mandiri dan pinter. Tapi di mata kakak, kamu tetap adek kecil yang selalu kakak sayang! 💜</p>
+                    <p className="italic leading-relaxed">"Dulu pas kecil gw selalu kepo dengan gimana rasanya punya adek, (sebenernya) gak nyangka gw bakal dapet adek di umur yang masih muda lahh kalo gw pikir-pikir sekarang"</p>
+                    <p className="leading-relaxed">Walaupun gitu, ternyata kehadiran lu di hidup gw ini adalah sebuah priceless gift, hadiah dari tuhan yang gak bisa digantiin sama emas segede gunung everest</p>
                   </div>
 
                   <motion.div
                     className="mt-6 text-right"
                     animate={{ opacity: [0.7, 1, 0.7] }}
                     transition={{ duration: 3, repeat: Infinity }}>
-                    <p className="text-purple-600 font-semibold">- Dengan cinta, Kakak 💝</p>
+                    <p className="text-purple-600 font-semibold">#BabyNibras</p>
                   </motion.div>
                 </div>
               </motion.div>
@@ -595,18 +647,18 @@ export default function MainApp() {
                     <span className="text-4xl">🌟</span>
                   </motion.div>
 
-                  <h3 className="text-2xl font-bold text-purple-800 mb-4">Prestasi yang Membanggakan</h3>
+                  <h3 className="text-2xl font-bold text-purple-800 mb-4">Pas lu TK</h3>
 
                   <div className="space-y-4 text-purple-700">
-                    <p className="italic leading-relaxed">"Kakak selalu bangga sama semua pencapaian kamu! Dari yang kecil sampai yang besar, semuanya bikin kakak happy banget! 🏆"</p>
-                    <p className="leading-relaxed">Di umur 17 ini, pasti masih banyak mimpi dan cita-cita yang pengen kamu capai. Kakak yakin banget kamu pasti bisa! Semangat terus ya! ✨</p>
+                    <p className="italic leading-relaxed">"yaaa gak bisa dipungkiri kalo kita berantem deui, entah karena hal-hal yang kecil yang sebenernya gak perlu diberantemin, tapi karena kedua pelaku dan korban juga masih kecil ya teman-teman wkwkwk jadi berantem terusss"</p>
+                    <p className="leading-relaxed">Tapi dari sekian berantem itu, gw selalu belajar sifat lu yang sulit gw pahamin tapi gw sangat ingin deket sama lu</p>
                   </div>
 
                   <motion.div
                     className="mt-6 text-right"
                     animate={{ opacity: [0.7, 1, 0.7] }}
                     transition={{ duration: 3, repeat: Infinity, delay: 1 }}>
-                    <p className="text-purple-600 font-semibold">- Your biggest supporter, Kakak 🎉</p>
+                    <p className="text-purple-600 font-semibold">#NibrasKG</p>
                   </motion.div>
                 </div>
               </motion.div>
@@ -619,7 +671,10 @@ export default function MainApp() {
                 <div className="relative overflow-hidden rounded-2xl shadow-2xl">
                   <div className="aspect-[4/3] bg-gradient-to-br from-purple-200 via-indigo-200 to-pink-200 flex items-center justify-center">
                     <div className="text-center">
-                      <img src="foto-2.jpg" alt="" />
+                      <img
+                        src="foto-2.jpg"
+                        alt=""
+                      />
                     </div>
                   </div>
 
@@ -647,7 +702,10 @@ export default function MainApp() {
                 <div className="relative overflow-hidden rounded-2xl shadow-2xl">
                   <div className="aspect-[4/3] bg-gradient-to-br from-indigo-200 via-pink-200 to-purple-200 flex items-center justify-center">
                     <div className="text-center">
-                      <img src="foto-3.jpg" alt="" />
+                      <img
+                        src="foto-3.jpg"
+                        alt=""
+                      />
                     </div>
                   </div>
 
@@ -674,18 +732,18 @@ export default function MainApp() {
                     <span className="text-4xl">🎉</span>
                   </motion.div>
 
-                  <h3 className="text-2xl font-bold text-purple-800 mb-4">Harapan untuk Masa Depan</h3>
+                  <h3 className="text-2xl font-bold text-purple-800 mb-4">Trus lu beranjak dewasa</h3>
 
                   <div className="space-y-4 text-purple-700">
-                    <p className="italic leading-relaxed">"Di umur 17 ini, kakak doain semoga kamu selalu sehat, bahagia, dan sukses dalam segala hal yang kamu lakuin! 🙏"</p>
-                    <p className="leading-relaxed">Apapun yang terjadi nanti, inget ya kalau kakak akan selalu ada buat kamu. Kamu nggak sendirian, karena kamu punya keluarga yang sayang banget sama kamu! 💜</p>
+                    <p className="italic leading-relaxed">"dan gw semakin khawatir, "Apakah Nibras sanggup menjalani masa remajanya sendiri bila masa remajanya berkaca dari masa remaja gw??" but gurl, you are the strongest girl i've ever seen. gw gak nyangka dengan sedikit aja gw tuh literally cuma ngasih sedikit banget pesan untuk hidup lu, lu bisa ngelewatin semua masa itu dengan baik walaupun tidak semuanya mudah"</p>
+                    <p className="leading-relaxed">Walaupun ada masa dimana things turn out 180 derajat, dimana langit bumi bak terbalik, lu tetep berusaha kuat. ketika lu kesulitan lu selalu seek for help ke gw, baik menjadi pendengar aja dan kadang gak jarang juga minta saran untuk aksi yang akan lu lakuin. gw selalu yakin bahwa lu bakal makin menjadi seorang wanita yang kuat kedepannya</p>
                   </div>
 
                   <motion.div
                     className="mt-6 text-right"
                     animate={{ opacity: [0.7, 1, 0.7] }}
                     transition={{ duration: 3, repeat: Infinity, delay: 2 }}>
-                    <p className="text-purple-600 font-semibold">- Forever your sibling, Kakak 👫💕</p>
+                    <p className="text-purple-600 font-semibold">#NibrasTeenage</p>
                   </motion.div>
                 </div>
               </motion.div>
@@ -693,62 +751,67 @@ export default function MainApp() {
           </div>
 
           <motion.div
-              className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center"
-              initial={{ x: 100, opacity: 0 }}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center"
+            initial={{ x: 100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 1, delay: 5.5 }}>
+            {/* Message Side - Left on desktop */}
+            <motion.div
+              className="space-y-6 order-2 lg:order-1"
+              initial={{ x: -100, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 1, delay: 5.5 }}>
-              {/* Message Side - Left on desktop */}
-              <motion.div
-                className="space-y-6 order-2 lg:order-1"
-                initial={{ x: -100, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 1, delay: 6 }}>
-                <div className="bg-gradient-to-br from-purple-50/80 to-indigo-50/80 backdrop-blur-sm rounded-2xl p-8 border border-purple-200/50">
-                  <motion.div
-                    className="mb-6"
-                    animate={{ rotate: [0, 10, -10, 0] }}
-                    transition={{ duration: 4, repeat: Infinity }}>
-                    <span className="text-4xl">🌟</span>
-                  </motion.div>
+              transition={{ duration: 1, delay: 6 }}>
+              <div className="bg-gradient-to-br from-purple-50/80 to-indigo-50/80 backdrop-blur-sm rounded-2xl p-8 border border-purple-200/50">
+                <motion.div
+                  className="mb-6"
+                  animate={{ rotate: [0, 10, -10, 0] }}
+                  transition={{ duration: 4, repeat: Infinity }}>
+                  <span className="text-4xl">🌟</span>
+                </motion.div>
 
-                  <h3 className="text-2xl font-bold text-purple-800 mb-4">Prestasi yang Membanggakan</h3>
+                <h3 className="text-2xl font-bold text-purple-800 mb-4">Last, but not least</h3>
 
-                  <div className="space-y-4 text-purple-700">
-                    <p className="italic leading-relaxed">"Kakak selalu bangga sama semua pencapaian kamu! Dari yang kecil sampai yang besar, semuanya bikin kakak happy banget! 🏆"</p>
-                    <p className="leading-relaxed">Di umur 17 ini, pasti masih banyak mimpi dan cita-cita yang pengen kamu capai. Kakak yakin banget kamu pasti bisa! Semangat terus ya! ✨</p>
-                  </div>
-
-                  <motion.div
-                    className="mt-6 text-right"
-                    animate={{ opacity: [0.7, 1, 0.7] }}
-                    transition={{ duration: 3, repeat: Infinity, delay: 1 }}>
-                    <p className="text-purple-600 font-semibold">- Your biggest supporter, Kakak 🎉</p>
-                  </motion.div>
+                <div className="space-y-4 text-purple-700">
+                  <p className="italic leading-relaxed">Ketika gw selalu denger kabar tentang lu dari orang-orang, selalu rasa bangga yang muncul dari hati gw akan betapa kerennya nibras yang ada sekarang ini"</p>
+                  <p className="leading-relaxed">Gw akan selalu menjadi supporter dan advisor lo yang paling depan, mau lu lagi dalam keaadan apapun, I'll be always be your number one supporter. no matter what things are, and that's a pinky promise.</p>
                 </div>
-              </motion.div>
 
-              {/* Photo Side - Right on desktop */}
-              <motion.div
-                className="relative group order-1 lg:order-2"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3 }}>
-                <div className="relative overflow-hidden rounded-2xl shadow-2xl">
-                  <div className="aspect-[4/3] bg-gradient-to-br from-purple-200 via-indigo-200 to-pink-200 flex items-center justify-center">
-                    <div className="text-center">
-                      <img src="foto-4.jpg" alt="" />
-                    </div>
-                  </div>
-
-                  <div className="absolute inset-0 bg-gradient-to-t from-pink-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-                  <div className="absolute -top-2 -left-2 w-6 h-6 border-t-4 border-l-4 border-indigo-400 rounded-tl-lg"></div>
-                  <div className="absolute -top-2 -right-2 w-6 h-6 border-t-4 border-r-4 border-pink-400 rounded-tr-lg"></div>
-                  <div className="absolute -bottom-2 -left-2 w-6 h-6 border-b-4 border-l-4 border-pink-400 rounded-bl-lg"></div>
-                  <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-4 border-r-4 border-indigo-400 rounded-br-lg"></div>
-                </div>
-              </motion.div>
+                <motion.div
+                  className="mt-6 text-right"
+                  animate={{ opacity: [0.7, 1, 0.7] }}
+                  transition={{ duration: 3, repeat: Infinity, delay: 1 }}>
+                  <p className="text-purple-600 font-semibold">#17(you)thOfNibras</p>
+                </motion.div>
+              </div>
             </motion.div>
 
+            {/* Photo Side - Right on desktop */}
+            <motion.div
+              className="relative group order-1 lg:order-2"
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.3 }}>
+              <div className="relative overflow-hidden rounded-2xl shadow-2xl">
+                <div className="aspect-[4/3] bg-gradient-to-br from-purple-200 via-indigo-200 to-pink-200 flex items-center justify-center">
+                  <div className="text-center">
+                    <img
+                      src="foto-4.jpg"
+                      alt=""
+                    />
+                  </div>
+                </div>
+
+                <div className="absolute inset-0 bg-gradient-to-t from-pink-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                <div className="absolute -top-2 -left-2 w-6 h-6 border-t-4 border-l-4 border-indigo-400 rounded-tl-lg"></div>
+                <div className="absolute -top-2 -right-2 w-6 h-6 border-t-4 border-r-4 border-pink-400 rounded-tr-lg"></div>
+                <div className="absolute -bottom-2 -left-2 w-6 h-6 border-b-4 border-l-4 border-pink-400 rounded-bl-lg"></div>
+                <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-4 border-r-4 border-indigo-400 rounded-br-lg"></div>
+              </div>
+            </motion.div>
+          </motion.div>
+
+
+          
           {/* Final Message */}
           <motion.div
             className="text-center mt-20"
@@ -766,20 +829,22 @@ export default function MainApp() {
                 <span className="text-5xl">💖</span>
               </motion.div>
 
-              <h3 className="text-3xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent mb-4">Happy 17th Birthday! 🎂</h3>
+              <h3 className="text-3xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent mb-4">Happy Sweet Seventeen my supercalifragilisticexpialidocious girl in the world 🎂</h3>
 
-              <p className="text-purple-700 text-lg leading-relaxed">Semoga website ini bisa jadi kenang-kenangan yang indah di hari spesial kamu. Terima kasih udah jadi adek yang paling amazing di dunia! ✨</p>
+              <p className="text-purple-700 text-lg leading-relaxed">Semoga ini bisa menjadi pengingat kalo kamu itu calon wanita kuat yang pasti bisa melewati segala hal. Aku harap tulisan ini jadi pengingat buat kamu, betapa hebatnya kamu sekarang, dan semua kekuatanmu ini adalah hasil dari perjalanan hidupmu selama 17 tahun ini. Will always support u!</p>
 
               <motion.p
                 className="text-purple-600 font-bold text-xl mt-6"
                 animate={{ opacity: [0.8, 1, 0.8] }}
                 transition={{ duration: 2, repeat: Infinity }}>
-                Love you always! 💜🎈
+                Love you the most! 💜🎈
               </motion.p>
             </div>
           </motion.div>
         </div>
       </motion.section>
+
+      
 
       {/* Wish Wall Section */}
       <motion.section
@@ -931,11 +996,120 @@ export default function MainApp() {
         </div>
 
         <div className="max-w-6xl mx-auto relative z-10">
-          <motion.div
-            className="text-center mb-12"
+          {/* Photo Gallery Section */}
+          <motion.div 
+            className="text-center mb-16"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1, delay: 3 }}>
+            transition={{ duration: 1, delay: 2.5 }}
+          >
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-pink-300 to-purple-300 bg-clip-text text-transparent mb-4">
+              📸 Kaleidoscope Memories 🌟
+            </h2>
+            <p className="text-purple-200 text-lg mb-8">
+              Koleksi kenangan indah perjalanan 17 tahun
+            </p>
+            
+            {/* Photo Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+              {file_list.map((filename, idx) => (
+                <motion.div
+                  key={`photo-${filename}-${idx}`}
+                  initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
+                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                  transition={{ 
+                    delay: 3 + (idx * 0.03), 
+                    duration: 0.6,
+                    type: "spring",
+                    stiffness: 100
+                  }}
+                  whileHover={{ 
+                    scale: 1.05, 
+                    rotate: 2,
+                    zIndex: 10,
+                    boxShadow: "0 25px 50px rgba(236, 72, 153, 0.4)"
+                  }}
+                  className="relative group cursor-pointer"
+                >
+                  <div className="relative overflow-hidden rounded-xl shadow-lg">
+                    <div className="aspect-square">
+                      <img
+                        src={`galeri/${filename}`}
+                        alt={`Memory ${idx + 1} - ${filename}`}
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                        loading="lazy"
+                        onLoad={() => {
+                          if (filename === "IMG-20250702-WA0013.jpg") {
+                            console.log("✅ IMG-20250702-WA0013.jpg loaded successfully!");
+                          }
+                        }}
+                        onError={(e) => {
+                          console.error(`❌ Failed to load: ${filename}`, e);
+                          if (filename === "IMG-20250702-WA0013.jpg") {
+                            console.error("🚨 Specific error for IMG-20250702-WA0013.jpg");
+                            console.error("📂 Expected path: galeri/IMG-20250702-WA0013.jpg");
+                          }
+                        }}
+                      />
+                    </div>
+                    
+                    {/* Gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    
+                    {/* Corner decorations */}
+                    <div className="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-pink-400 rounded-tl-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute -top-1 -right-1 w-4 h-4 border-t-2 border-r-2 border-purple-400 rounded-tr-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute -bottom-1 -left-1 w-4 h-4 border-b-2 border-l-2 border-purple-400 rounded-bl-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-pink-400 rounded-br-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    
+                    {/* Photo number badge */}
+                    <div className="absolute top-2 left-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white text-xs px-2 py-1 rounded-full font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      #{idx + 1}
+                    </div>
+                    
+                    {/* Floating hearts effect */}
+                    <motion.div
+                      className="absolute top-2 right-2 text-pink-400 opacity-0 group-hover:opacity-100"
+                      animate={{ y: [0, -8, 0] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    >
+                      💕
+                    </motion.div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+            
+            {/* Gallery statistics */}
+            <motion.div 
+              className="mt-12 text-center"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 4, duration: 1 }}
+            >
+              <div className="inline-flex items-center space-x-8 bg-gradient-to-r from-pink-100/20 to-purple-100/20 backdrop-blur-sm rounded-2xl px-8 py-4 border border-pink-200/30">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-pink-300">{file_list.length}</div>
+                  <div className="text-sm text-purple-200">Total Memories</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-purple-300">17</div>
+                  <div className="text-sm text-purple-200">Years of Life</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-indigo-300">∞</div>
+                  <div className="text-sm text-purple-200">Love & Joy</div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* Gallery of Wishes Section */}
+          <motion.div
+            className="text-center mb-12 mt-20"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 1, delay: 5 }}>
             <h2 className="text-4xl font-bold bg-gradient-to-r from-pink-300 to-purple-300 bg-clip-text text-transparent mb-4">💜 Gallery of Wishes 🌸</h2>
             <p className="text-purple-200 text-lg">Kumpulan doa dan harapan dari orang-orang terkasih</p>
           </motion.div>
