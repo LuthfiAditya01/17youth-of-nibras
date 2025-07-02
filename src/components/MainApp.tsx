@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 interface Wish {
@@ -10,7 +10,6 @@ interface Wish {
 
 export default function MainApp() {
   const [wishes, setWishes] = useState<Wish[]>([]);
-  const [isFetching, setIsFetching] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchWishes = async () => {
@@ -34,16 +33,13 @@ export default function MainApp() {
             FotoURL: ""
           }
         ]);
-      } finally {
-        setIsFetching(false);
       }
     };
 
     fetchWishes();
   }, []);
 
-  // Loading sudah dihandle di App.tsx, jadi kita tidak perlu loading screen disini
-  // Tapi kita tetap bisa show placeholder saat fetch wishes
+  // Loading sudah dihandle di App.tsx dengan cinematic loading sequence
 
   return(
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-pink-900 to-indigo-900">
